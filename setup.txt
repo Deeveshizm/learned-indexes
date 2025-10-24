@@ -1,6 +1,12 @@
-*this is a text file to list steps for setup of the environment and also how to
-execute the learned index and the analysis*
+install cmake if not already installed:
+> brew install cmake
 
-Requirements:
-    1. C++ compiler (we will be using clang++)
-    2. CMake
+in terminal got to the learned-index directory:
+> mkdir -p build
+
+go to build directory:
+> cd build
+> cmake ..
+> make
+> ./leaned_index_benchmark
+
