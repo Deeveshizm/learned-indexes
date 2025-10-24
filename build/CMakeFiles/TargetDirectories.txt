@@ -1,0 +1,3 @@
+/Users/deeveshizm/dev/learned-index/build/CMakeFiles/learned_index_benchmark.dir
+/Users/deeveshizm/dev/learned-index/build/CMakeFiles/edit_cache.dir
+/Users/deeveshizm/dev/learned-index/build/CMakeFiles/rebuild_cache.dir
