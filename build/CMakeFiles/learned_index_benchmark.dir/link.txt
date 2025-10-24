@@ -1,1 +1,0 @@
-/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/learned_index_benchmark.dir/learned_index_prototype.cpp.o -o learned_index_benchmark
