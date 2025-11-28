@@ -1,0 +1,34 @@
+// Project Setup Instructions
+pip intstall matplotlib numpy
+
+// Dataset download commands:
+requirements:
+  - osmium-tool
+  - command to install osmium-tool:
+            > brew install osmium-tool
+            > pip install osmium
+
+
+command to download Florida OSM data:
+    > mkdir -p data
+    > osmium export data/florida-latest.osm.pbf \
+        --output-format=text \
+        --output=data/florida_nodes.txt \
+        --attributes=id,lon,lat
+    > cd ..
+    > python extract_florida.py
+
+command to download Nasa Dataset:
+    > cd data
+    > curl -O ftp://ita.ee.lbl.gov/traces/NASA_access_log_Jul95.gz 
+    > gunzip NASA_access_log_Jul95.gz
+
+// Building and Running the Project:
+Run:
+    > make run
+    > python plot_results.py
+    > make plot
+
+
+
+
