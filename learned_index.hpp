@@ -38,7 +38,10 @@ private:
     size_t hidden_size;
     size_t num_layers;
 
-    double relu(double x) const { return std::max(0.0, x); } 
+    double relu(double x) const { return std::max(0.0, x); }
+
+    double x_min_, x_max_, x_range_, y_max_;
+    bool use_log_;  // Flag for log transformation
 
 public:
     NeuralNetModel(size_t hidden_size, size_t num_layers);

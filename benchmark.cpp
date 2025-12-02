@@ -172,6 +172,7 @@ int main() {
     std::cout << "  • Florida OSM: 10M records\n\n";
     
     const size_t NUM_QUERIES = 10000;
+    const size_t DATASET_SIZE = 1000000;
     std::mt19937 rng(42);
     
     std::map<std::string, std::vector<BenchmarkResult>> all_results;
@@ -180,8 +181,8 @@ int main() {
     std::vector<std::pair<std::string, std::vector<std::pair<double, size_t>>>> datasets;
     
     // Dataset 1: Lognormal (10M) - CHANGED
-    std::cout << ">>> Loading Lognormal (10M)...\n";
-    datasets.push_back({"Lognormal (10M)", dataset_loader::generate_lognormal(10000000)});
+    std::cout << ">>> Loading Lognormal (1M)...\n";
+    datasets.push_back({"Lognormal (1M)", dataset_loader::generate_lognormal(DATASET_SIZE)});
     
     // Dataset 2: NASA Logs (full)
     std::cout << ">>> Loading NASA Logs...\n";
@@ -191,10 +192,10 @@ int main() {
     }
     
     // Dataset 3: Florida OSM (10M) - CHANGED
-    std::cout << ">>> Loading Florida OSM (10M)...\n";
-    auto osm_data = dataset_loader::load_osm_longitudes("data/florida_nodes.csv", 10000000);
+    std::cout << ">>> Loading Florida OSM (1M)...\n";
+    auto osm_data = dataset_loader::load_osm_longitudes("data/florida_nodes.csv", DATASET_SIZE);
     if (osm_data.size() > 0) {
-        datasets.push_back({"Florida OSM (50M)", osm_data});
+        datasets.push_back({"Florida OSM (1M)", osm_data});
     }
     
     // Run benchmarks on each dataset
@@ -236,7 +237,7 @@ int main() {
         cfg_linear_10k.num_hidden_layers = 0;
         results.push_back(benchmark_learned(data, queries, cfg_linear_10k, "Linear [1,10K]"));
         
-        std::cout << "\n[3/3] ⭐ HYBRID Approach (NN top + Linear bottom):\n";
+        std::cout << "\n[3/3] HYBRID Approach (NN top + Linear bottom):\n";
         std::cout << std::string(50, '-') << "\n";
         
         RecursiveModelIndex::Config cfg_hybrid_1k;
@@ -261,8 +262,8 @@ int main() {
         all_results[dataset_name] = results;
     }
     
-    save_to_json("benchmark_results_complete_10M.json", all_results);
-    std::cout << "\n✓ Results saved to benchmark_results_complete_10M.json\n";
+    save_to_json("benchmark_results_complete.json", all_results);
+    std::cout << "\n✓ Results saved to benchmark_results_complete.json\n";
     
     return 0;
 }

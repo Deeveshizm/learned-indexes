@@ -97,6 +97,10 @@ public:
     Value* find(const Key& key) {
         return find_in_node(root, key);
     }
+    // Lookup using lower_bound (for benchmarking compatibility)
+    size_t lookup(const Key& key) {
+        return lower_bound(key);
+    }
     
     // Lower bound (first key >= search key)
     size_t lower_bound(const Key& key) {

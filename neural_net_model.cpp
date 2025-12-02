@@ -4,7 +4,8 @@
 #include <random>
 
 NeuralNetModel::NeuralNetModel(size_t hidden_size, size_t num_layers) 
-    : hidden_size(hidden_size), num_layers(num_layers) {
+    : hidden_size(hidden_size), num_layers(num_layers),
+      x_min_(0.0), x_max_(1.0), x_range_(1.0), y_max_(1.0), use_log_(false) {  // Initialize use_log_
     
     weights.resize(num_layers);
     biases.resize(num_layers);
@@ -23,13 +24,30 @@ void NeuralNetModel::train(const std::vector<std::pair<double, size_t>>& data) {
     
     size_t n = data.size();
     
-    // Normalize inputs and outputs
-    double x_min = data.front().first;
-    double x_max = data.back().first;
-    double x_range = x_max - x_min;
-    if (x_range == 0) x_range = 1.0;
+    std::vector<std::pair<double, size_t>> transformed_data;
+    transformed_data.reserve(n);
     
-    double y_max = static_cast<double>(n - 1);
+    double min_key = data.front().first;
+    double max_key = data.back().first;
+    use_log_ = (max_key / (min_key + 1.0)) > 100.0;  // Use log if >100x range
+    
+    if (use_log_) {
+        // Apply log transformation
+        for (const auto& [key, pos] : data) {
+            double log_key = std::log(key + 1.0);  // +1 to handle zero
+            transformed_data.emplace_back(log_key, pos);
+        }
+    } else {
+        transformed_data = data;
+    }
+    
+    // STORE normalization parameters for inference
+    x_min_ = transformed_data.front().first;
+    x_max_ = transformed_data.back().first;
+    x_range_ = x_max_ - x_min_;
+    if (x_range_ == 0) x_range_ = 1.0;
+    
+    y_max_ = static_cast<double>(n - 1);
     
     // Initialize weights with He initialization
     std::mt19937 rng(42);
@@ -45,10 +63,10 @@ void NeuralNetModel::train(const std::vector<std::pair<double, size_t>>& data) {
         std::fill(b.begin(), b.end(), 0.0);
     }
     
-    // Training hyperparameters - OPTIMIZED FOR SPEED
-    const size_t num_epochs = 20;           // Reduced from 100
-    const double learning_rate = 0.001;     // Increased from 0.00001
-    const size_t batch_size = 128;          // Increased from 32
+    // Training hyperparameters - OPTIMIZED FOR SKEWED DISTRIBUTIONS
+    const size_t num_epochs = 100;          // More epochs for better convergence
+    const double learning_rate = 0.05;      // Much higher learning rate
+    const size_t batch_size = 128;          // Smaller batches for more updates
     
     // Mini-batch SGD
     std::vector<size_t> indices(n);
@@ -72,8 +90,8 @@ void NeuralNetModel::train(const std::vector<std::pair<double, size_t>>& data) {
             
             for (size_t b = batch_start; b < batch_end; ++b) {
                 size_t idx = indices[b];
-                double x = (data[idx].first - x_min) / x_range;
-                double y_true = data[idx].second / y_max;
+                double x = (transformed_data[idx].first - x_min_) / x_range_;
+                double y_true = transformed_data[idx].second / y_max_;
                 
                 // Forward pass
                 std::vector<std::vector<double>> layer_outputs(num_layers + 1);
@@ -147,12 +165,11 @@ void NeuralNetModel::train(const std::vector<std::pair<double, size_t>>& data) {
 }
 
 double NeuralNetModel::predict(double key) const {
-    double x_min = 0.0;  // Should store these during training ideally
-    double x_max = 1.0;
-    double x_range = x_max - x_min;
-    if (x_range == 0) x_range = 1.0;
+    // Apply log transformation if it was used during training
+    double transformed_key = use_log_ ? std::log(key + 1.0) : key;
     
-    double x = (key - x_min) / x_range;
+    // FIX: Use stored normalization parameters
+    double x = (transformed_key - x_min_) / x_range_;
     
     std::vector<double> activations = {x};
     
@@ -178,12 +195,15 @@ double NeuralNetModel::predict(double key) const {
         activations = next_activations;
     }
     
-    return activations[0];
+    return activations[0] * y_max_;
 }
 
 size_t NeuralNetModel::get_model_size() const {
     size_t total = 0;
     for (const auto& w : weights) total += w.size() * sizeof(double);
     for (const auto& b : biases) total += b.size() * sizeof(double);
+    // Add normalization parameters
+    total += 4 * sizeof(double);  // x_min_, x_max_, x_range_, y_max_
+    total += sizeof(bool);         // use_log_
     return total;
 }
