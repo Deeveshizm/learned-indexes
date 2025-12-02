@@ -1,0 +1,8 @@
+.DS_Store
+*.o
+benchmark
+benchmark_results*.json
+build/
+plots/
+*.ipynb
+*.bak
