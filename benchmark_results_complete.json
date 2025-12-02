@@ -1,0 +1,176 @@
+{
+  "Florida OSM (1M)": [
+    {
+      "name": "B-Tree (page=128)",
+      "build_time_ms": 2847,
+      "avg_lookup_ns": 2.32702e+06,
+      "size_mb": 1580.66,
+      "error_percentage": 0
+    },
+    {
+      "name": "B-Tree (page=256)",
+      "build_time_ms": 1023,
+      "avg_lookup_ns": 1.01e+06,
+      "size_mb": 1544.83,
+      "error_percentage": 0
+    },
+    {
+      "name": "Linear [1]",
+      "build_time_ms": 2972,
+      "avg_lookup_ns": 3568.02,
+      "size_mb": 1509.3,
+      "error_percentage": 0
+    },
+    {
+      "name": "Linear [1,1K]",
+      "build_time_ms": 5242,
+      "avg_lookup_ns": 1505.15,
+      "size_mb": 1509.33,
+      "error_percentage": 0.000859029
+    },
+    {
+      "name": "Linear [1,10K]",
+      "build_time_ms": 5028,
+      "avg_lookup_ns": 1188.2,
+      "size_mb": 1509.6,
+      "error_percentage": 0.000853824
+    },
+    {
+      "name": "HYBRID: 1-layer NN + 1K Linear",
+      "build_time_ms": 5.35665e+06,
+      "avg_lookup_ns": 4756.44,
+      "size_mb": 1509.33,
+      "error_percentage": 0.000837381
+    },
+    {
+      "name": "HYBRID: 1-layer NN + 10K Linear",
+      "build_time_ms": 5.33979e+06,
+      "avg_lookup_ns": 7438.27,
+      "size_mb": 1509.6,
+      "error_percentage": 0.000829988
+    },
+    {
+      "name": "HYBRID: 2-layer NN + 10K Linear",
+      "build_time_ms": 8.01832e+06,
+      "avg_lookup_ns": 5214.29,
+      "size_mb": 1509.6,
+      "error_percentage": 3.39014e-06
+    }
+  ],
+  "Lognormal (1M)": [
+    {
+      "name": "B-Tree (page=128)",
+      "build_time_ms": 1379,
+      "avg_lookup_ns": 2.31334e+06,
+      "size_mb": 1598.02,
+      "error_percentage": 0
+    },
+    {
+      "name": "B-Tree (page=256)",
+      "build_time_ms": 1054,
+      "avg_lookup_ns": 1.01477e+06,
+      "size_mb": 1561.8,
+      "error_percentage": 0
+    },
+    {
+      "name": "Linear [1]",
+      "build_time_ms": 2793,
+      "avg_lookup_ns": 3463.09,
+      "size_mb": 1525.88,
+      "error_percentage": 0.176176
+    },
+    {
+      "name": "Linear [1,1K]",
+      "build_time_ms": 5895,
+      "avg_lookup_ns": 4037.17,
+      "size_mb": 1525.91,
+      "error_percentage": 0.103519
+    },
+    {
+      "name": "Linear [1,10K]",
+      "build_time_ms": 5113,
+      "avg_lookup_ns": 1812.55,
+      "size_mb": 1526.18,
+      "error_percentage": 0.00261308
+    },
+    {
+      "name": "HYBRID: 1-layer NN + 1K Linear",
+      "build_time_ms": 5.42397e+06,
+      "avg_lookup_ns": 10168,
+      "size_mb": 1525.91,
+      "error_percentage": 0.000879237
+    },
+    {
+      "name": "HYBRID: 1-layer NN + 10K Linear",
+      "build_time_ms": 5.41575e+06,
+      "avg_lookup_ns": 7067.14,
+      "size_mb": 1526.18,
+      "error_percentage": 0.000907488
+    },
+    {
+      "name": "HYBRID: 2-layer NN + 10K Linear",
+      "build_time_ms": 8.06716e+06,
+      "avg_lookup_ns": 2812.26,
+      "size_mb": 1526.18,
+      "error_percentage": 1.89265e-05
+    }
+  ],
+  "NASA Web Logs": [
+    {
+      "name": "B-Tree (page=128)",
+      "build_time_ms": 31,
+      "avg_lookup_ns": 21905.3,
+      "size_mb": 30.2331,
+      "error_percentage": 0
+    },
+    {
+      "name": "B-Tree (page=256)",
+      "build_time_ms": 20,
+      "avg_lookup_ns": 10911,
+      "size_mb": 29.5507,
+      "error_percentage": 0
+    },
+    {
+      "name": "Linear [1]",
+      "build_time_ms": 40,
+      "avg_lookup_ns": 718.661,
+      "size_mb": 28.8653,
+      "error_percentage": 0.00206777
+    },
+    {
+      "name": "Linear [1,1K]",
+      "build_time_ms": 118,
+      "avg_lookup_ns": 573.806,
+      "size_mb": 28.8958,
+      "error_percentage": 8.07152e-05
+    },
+    {
+      "name": "Linear [1,10K]",
+      "build_time_ms": 75,
+      "avg_lookup_ns": 479.582,
+      "size_mb": 29.1705,
+      "error_percentage": 8.98233e-05
+    },
+    {
+      "name": "HYBRID: 1-layer NN + 1K Linear",
+      "build_time_ms": 80431,
+      "avg_lookup_ns": 714.923,
+      "size_mb": 28.8958,
+      "error_percentage": 0.000317892
+    },
+    {
+      "name": "HYBRID: 1-layer NN + 10K Linear",
+      "build_time_ms": 80637,
+      "avg_lookup_ns": 633.153,
+      "size_mb": 29.1705,
+      "error_percentage": 0.000252343
+    },
+    {
+      "name": "HYBRID: 2-layer NN + 10K Linear",
+      "build_time_ms": 129018,
+      "avg_lookup_ns": 743.174,
+      "size_mb": 29.1709,
+      "error_percentage": 0.000292417
+    }
+  ]
+}
